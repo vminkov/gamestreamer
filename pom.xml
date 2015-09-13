@@ -4,6 +4,9 @@
 	<groupId>NALB-camera</groupId>
 	<artifactId>NALB-camera</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<properties>
+	    <dropwizard.version>0.8.2</dropwizard.version>
+	</properties>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
@@ -23,5 +26,10 @@
 			<artifactId>vlcj</artifactId>
 			<version>3.9.0</version>
 		</dependency>
+	   <dependency>
+	       <groupId>io.dropwizard</groupId>
+	       <artifactId>dropwizard-core</artifactId>
+	       <version>${dropwizard.version}</version>
+	   </dependency>
 	</dependencies>
 </project>
