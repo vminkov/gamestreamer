@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GameStreamer Live Video Control Panel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"
+          media="screen">
+    <style type="text/css">
+        body {
+            padding-top: 40px;
+            padding-bottom: 40px;
+            background-color: #f5f5f5;
+        }
+    </style>
+    <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+	<button id="play_button">Play</button>
+	<button id="pause_button">Pause</button>
+	<h2 id="status_banner"><label>UNKNOWN</label></h2>
+</div>
+
+<script src="bootstrap/js/jquery-2.1.4.min.js"></script>
+<script src="bootstrap/js/bootstrap.js"></script>
+<script src="js/js.cookie.js"></script>
+<script src="js/main.js"></script>
+<script type="text/javascript">
+    $(document)
+            .ready(
+            function () {
+                $('#play_button').click(
+                        function () {
+                            gs_ajax({}, "/stream/start", 'POST', function(){alert('playing!')}, function(){alert('error playing!')});
+                        });
+                $('#pause_button').click(
+                        function () {
+                            gs_ajax({}, "/stream/pause", 'POST', function(){alert('paused!')});
+                        });
+            });
+    
+    function toggle_banner(online){
+		var jq_banner = $("#status_banner");
+		if(online == "true"){
+			jq_banner.text("ON AIR");
+			jq_banner.css("background-color", "green");
+		}else{
+			jq_banner.text("OFF AIR");
+			jq_banner.css("background-color", "red");
+		}
+    }
+    
+    $(document).ready(function(){
+    	setInterval(function(){
+    		gs_ajax({}, "/stream/status", "GET", 
+    				function(status){
+    					toggle_banner(status);
+					},
+    				function(status){
+    					toggle_banner(status);
+					})
+    	}, 2000);		
+    });
+</script>
+</body>
+</html>
