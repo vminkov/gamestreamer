@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>GameStreamer Live Video Control Panel</title>
+    <title>GameStreamer Live Video Control Panel - Mosaic Config</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"
           media="screen">
@@ -17,9 +17,10 @@
 <body>
 
 <div class="container">
-	<button id="play_button">Play</button>
-	<button id="pause_button">Pause</button>
-	<h2 id="status_banner"><label>UNKNOWN</label></h2>
+	<textarea style="width:100%; height: 400px;" id="mosaic_text"></textarea>
+	<button id="reload_button">Reload</button>
+	<button id="reset_button">Reset</button>
+	<button id="change_button">Change</button>
 </div>
 
 <script src="bootstrap/js/jquery-2.1.4.min.js"></script>
@@ -32,7 +33,7 @@
             function () {
                 $('#play_button').click(
                         function () {
-                            gs_ajax({'type':'live'}, "/stream/start", 'POST', function(){alert('playing!')}, function(){alert('error playing!')});
+                            gs_ajax({}, "/stream/start", 'POST', function(){alert('playing!')}, function(){alert('error playing!')});
                         });
                 $('#pause_button').click(
                         function () {
@@ -50,18 +51,24 @@
 			jq_banner.css("background-color", "red");
 		}
     }
+    function load_mosaic(){
+    		gs_ajax({}, "/mosaic/get", "GET", 
+    				function(config){
+		    			$('#mosaic_text').val(config.text);
+					});
+    }
     
-    $(document).ready(function(){
-    	setInterval(function(){
-    		gs_ajax({}, "/stream/status", "GET", 
-    				function(status){
-    					toggle_banner(status);
-					},
-    				function(status){
-    					toggle_banner(status);
-					})
-    	}, 2000);		
-    });
+    $(document).ready(load_mosaic);
+	$('#reload_button').click(load_mosaic)
+	$('#reset_button').click(function(){
+     	gs_ajax({}, "/mosaic/get/default", "GET", 
+			function(config){
+				$('#mosaic_text').val(config.text);
+			});
+	});
+	$('#change_button').click(function(){
+     	gs_ajax({"text":$('#mosaic_text').val()}, "/mosaic/update", "POST", function(){alert('success!')});
+	});
 </script>
 </body>
 </html>

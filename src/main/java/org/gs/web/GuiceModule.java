@@ -1,5 +1,6 @@
 package org.gs.web;
 
+import org.gs.stream.MosaicMediaStreamer;
 import org.gs.web.auth.UserSessionsController;
 
 import com.google.inject.AbstractModule;
@@ -16,5 +17,11 @@ public class GuiceModule extends AbstractModule {
 	@Singleton
 	public UserSessionsController userController() {
 		return new UserSessionsController();
+	}
+	
+	@Provides
+	@Singleton
+	public MosaicMediaStreamer mediaStreamer() {
+		return new MosaicMediaStreamer();
 	}
 }

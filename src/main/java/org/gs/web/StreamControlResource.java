@@ -13,9 +13,11 @@ import javax.ws.rs.core.Response;
 
 import org.gs.auth.User;
 import org.gs.stream.MosaicMediaStreamer;
+import org.gs.stream.PlayerInstance;
 import org.gs.web.auth.BasicAuth;
 
 import com.codahale.metrics.annotation.Timed;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Path("/stream")
 @Produces(MediaType.APPLICATION_JSON)
@@ -38,8 +40,9 @@ public class StreamControlResource {
 	@Path("/start")
 	@POST
 	@Timed
-	public Response onPlay(@BasicAuth User user) {
-		this.streamer.play();
+	public Response onPlay(@BasicAuth User user, Player p) {
+		PlayerInstance type = PlayerInstance.valueOf(p.type.toUpperCase());
+		this.streamer.play(type);
 		
 		return JsonResponse.ok();
 	}
@@ -52,4 +55,12 @@ public class StreamControlResource {
 		
 		return result;
 	}
+}
+
+class Player {
+	public Player() {
+	}
+	
+	@JsonProperty
+	String type;
 }

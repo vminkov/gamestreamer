@@ -1,6 +1,7 @@
 package org.gs;
 
 import org.gs.stream.MosaicMediaStreamer;
+import org.gs.stream.PlayerInstance;
 import org.gs.web.GuiceModule;
 import org.gs.web.WebApplication;
 
@@ -23,7 +24,7 @@ public class Start {
 		}
 		else {
 			MosaicMediaStreamer ms = new MosaicMediaStreamer();
-			ms.play();
+			ms.play(PlayerInstance.LIVE);
 			
 			Thread.currentThread().join();
 		}

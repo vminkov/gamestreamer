@@ -14,6 +14,7 @@ import org.glassfish.jersey.server.internal.inject.ParamInjectionResolver;
 import org.glassfish.jersey.server.model.Parameter;
 import org.glassfish.jersey.server.spi.internal.ValueFactoryProvider;
 import org.gs.auth.User;
+import org.gs.stream.MosaicMediaStreamer;
 
 @Singleton
 public class UserParamInjectionResolver extends ParamInjectionResolver<BasicAuth> {
@@ -48,6 +49,7 @@ public class UserParamInjectionResolver extends ParamInjectionResolver<BasicAuth
 		public void configure() {
 			bind(UserFactory.class).to(UserFactory.class).in(Singleton.class);
 			bind(UserSessionsController.class).to(UserSessionsController.class).in(Singleton.class);
+			bind(MosaicMediaStreamer.class).to(MosaicMediaStreamer.class).in(Singleton.class);
 			
 			bind(UserFactoryProvider.class).to(ValueFactoryProvider.class).in(Singleton.class);
 			

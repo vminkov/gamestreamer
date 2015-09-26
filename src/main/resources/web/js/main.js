@@ -5,7 +5,8 @@ function gs_ajax(data, resource, method, success_callback, error_callback){
 	
 	if(!error_callback){
 		error_callback = function(data){
-			alert(JSON.stringify(data.responseJSON.message));
+			var response = data.responseJSON || data.responseText;
+			alert(JSON.stringify(response));
 		}
 	}
 	

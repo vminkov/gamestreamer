@@ -8,6 +8,7 @@
 		<dropwizard.version>0.8.2</dropwizard.version>
 		<guice.version>4.0</guice.version>
 		<jersey-multipart.version>1.18.1</jersey-multipart.version>
+		<commons-io.version>2.4</commons-io.version>
 	</properties>
 
 	<build>
@@ -55,6 +56,12 @@
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>18.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${commons-io.version}</version>
 		</dependency>
 	</dependencies>
 </project>
