@@ -5,8 +5,11 @@
 	<artifactId>NALB-camera</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<properties>
-	    <dropwizard.version>0.8.2</dropwizard.version>
+		<dropwizard.version>0.8.2</dropwizard.version>
+		<guice.version>4.0</guice.version>
+		<jersey-multipart.version>1.18.1</jersey-multipart.version>
 	</properties>
+
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
@@ -20,16 +23,33 @@
 			</plugin>
 		</plugins>
 	</build>
+
 	<dependencies>
 		<dependency>
 			<groupId>uk.co.caprica</groupId>
 			<artifactId>vlcj</artifactId>
 			<version>3.9.0</version>
 		</dependency>
-	   <dependency>
-	       <groupId>io.dropwizard</groupId>
-	       <artifactId>dropwizard-core</artifactId>
-	       <version>${dropwizard.version}</version>
-	   </dependency>
+		<dependency>
+			<groupId>io.dropwizard</groupId>
+			<artifactId>dropwizard-core</artifactId>
+			<version>${dropwizard.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.dropwizard</groupId>
+			<artifactId>dropwizard-auth</artifactId>
+			<version>${dropwizard.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.inject</groupId>
+			<artifactId>guice</artifactId>
+			<version>${guice.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>18.0</version>
+		</dependency>
 	</dependencies>
 </project>

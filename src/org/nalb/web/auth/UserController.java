@@ -1,4 +1,4 @@
-package org.nalb.auth;
+package org.nalb.web.auth;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -7,17 +7,19 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.UUID;
 
-import javax.inject.Singleton;
+import org.nalb.auth.User;
+
+import com.google.inject.Singleton;
 
 @Singleton
-public class UsersController {
-	private final Map<String, User> currentUsers = new HashMap<>();
+public class UserController {
+	private static final Map<String, User> currentUsers = new HashMap<>();
 	
 	public User getUser(String sessionKey) {
-		return this.currentUsers.get(sessionKey);
+		return currentUsers.get(sessionKey);
 	}
 	
-	public String authenticate(String email, String password) {
+	public String signIn(String email, String password) {
 		Properties usersProps = new Properties();
 		try {
 			usersProps.load(new FileReader("users.txt"));
@@ -29,16 +31,16 @@ public class UsersController {
 		
 		String dbPassword = usersProps.getProperty(email);
 		if (dbPassword == null) {
-			throw new RuntimeException("Invalid user");
+			throw new IllegalArgumentException("Invalid user");
 		}
 		if (!dbPassword.equals(password)) {
-			throw new RuntimeException("Invalid password");
+			throw new IllegalArgumentException("Invalid password");
 		}
 		
 		String name = usersProps.getProperty(email + "/" + "NAME");
 		String sessionKey = UUID.randomUUID().toString();
 		
-		this.currentUsers.put(sessionKey, new User(name, sessionKey, email));
+		currentUsers.put(sessionKey, new User(name, sessionKey, email));
 		
 		return sessionKey;
 	}
